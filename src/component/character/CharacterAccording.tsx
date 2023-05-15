@@ -16,8 +16,6 @@ const CharacterAccording = ({ episodeDetail, episodeQuery, characterDetail }: an
       {characterDetail?.episode?.map((epis: any, index: number) => {
         return (
           <Box key={index}>
-            {/* <Typography key={index} style={{textAlign: 'start'}}
-                                                     onClick={() => handleEpisodeData(epis.name)}>{epis.name}</Typography> */}
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}

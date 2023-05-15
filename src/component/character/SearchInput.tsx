@@ -14,8 +14,8 @@ const SearchInput = ({name, handleNameQuery}:any) => {
                 data-testid={name}
 
                 style={{marginRight:''}}
-                onInput={(e) => {
-                    handleNameQuery("name", e)
+                onChange={(e) => {
+                    handleNameQuery("name", e.target.value)
                 }}
 
                 variant="outlined"

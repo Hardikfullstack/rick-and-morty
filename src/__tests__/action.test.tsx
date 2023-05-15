@@ -1,5 +1,7 @@
+import { waitFor } from "@testing-library/react"
 import { clearCharacter, getCharacter, getCharacterDetail, getEpisodeDetail, setCharacter, setCharacterDetail, setEpisodeDetail } from "../redux/action";
 import reducers, { initialState } from "../redux/reducer";
+import {mockCharacterData, mockCharacterDetail, mockEpisodeDetail} from "../mock/mockData";
 
 // Get Character
 describe('Get Character', () => {
@@ -10,6 +12,32 @@ describe('Get Character', () => {
           character: {},
           loading: false
     });
+    });
+    it('properly captures a data received from API for list of character', async () => {
+        const graphqlQuery = {
+            operationName: "characters",
+            query: `
+                query characters($page : Int!){
+                characters(page: $page) {
+                    info {
+                        count
+                    }
+                    results {
+                        name
+                        image
+                        species
+                        id
+                        status
+                    }
+                }
+            }`,
+            variables: { page: 1 },
+        };
+        expect(reducers(initialState, await waitFor(() => getCharacter(graphqlQuery, (data) => setCharacter(data))))).toEqual({
+            allCharacters: mockCharacterData,
+            character: {},
+            loading: false,
+        });
     });
    })
 
@@ -44,6 +72,36 @@ describe('Get Character Detail', () => {
           loading: false
         });
     });
+    it('properly captures a data received from API for one character', async () => {
+        const graphqlQuery = {
+            query: `
+                query getCharacterDetail($id: ID!) {
+                character(id: $id) {
+                  name
+                  image
+                  species
+                  gender
+                  status
+                  episode {
+                    name
+                    id
+                  }
+                  location {
+                    name
+                    dimension
+                  }
+                }
+              }`,
+            variables: {
+                id: "2",
+            },
+        };
+        expect(reducers(initialState, await waitFor(() => getCharacterDetail(graphqlQuery, (data) => setCharacterDetail(data))))).toEqual({
+            allCharacters: [],
+            character: mockCharacterDetail,
+            loading: false,
+        });
+    });
    })
 
 // Clear Character   
@@ -76,6 +134,28 @@ describe('Get Episode Detail', () => {
           allCharacters: [],
           character: {},
           loading: false
+        });
+    });
+    it('properly captures a data received from API for one episode', async () => {
+        const graphqlQuery = {
+            operationName: "episodes",
+            query: `
+                query episodes($filter:  FilterEpisode!) {
+                episodes(filter: $filter) {
+                      results{
+                        name
+                        air_date
+                        episode
+                    }
+                }
+                }`,
+            variables: {filter: {name: "M. Night Shaym-Aliens!"}},
+        };
+        expect(reducers(initialState, await waitFor(() => getEpisodeDetail(graphqlQuery, (data) => setEpisodeDetail(data))))).toEqual({
+            allCharacters: [],
+            character: {},
+            episode: mockEpisodeDetail,
+            loading: false,
         });
     });
    })

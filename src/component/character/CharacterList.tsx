@@ -15,7 +15,7 @@ import CharacterDetail from "./CharacterDetail";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import InfoIcon from "@mui/icons-material/Info";
-import { getCharacter, getCharacterDetail } from "../../redux/action";
+import {getCharacter, getCharacterDetail, setCharacter} from "../../redux/action";
 import { useAppDispatch } from "../../redux/hooks";
 import { useAppSelector } from "../../redux/hooks";
 import SearchInput from "./SearchInput";
@@ -32,7 +32,7 @@ const Img = styled("img")({
   overflow: "hidden",
   marginBottom: 0,
 });
-export default function Character() {
+export default function CharacterList() {
   const [characterId, setCharacterId] = useState<number>();
   const [showDetail, setShowDetail] = useState(false);
   const [page, setPage] = useState(1);
@@ -40,7 +40,7 @@ export default function Character() {
   const character = useAppSelector((state) => state.data.allCharacters);
 
 
-  const pageQuery = (data: number) => {
+  const pageQuery = async (data: number) => {
     const graphqlQuery = {
       operationName: "characters",
       query: `
@@ -60,7 +60,7 @@ export default function Character() {
             }`,
       variables: { page: data },
     };
-    getCharacter(graphqlQuery);
+    await getCharacter(graphqlQuery, (data) => dispatch(setCharacter(data)));
   };
 
   useEffect(() => {
@@ -79,10 +79,10 @@ export default function Character() {
   };
 
 
-  const handleQuery = (type: 'name' | 'gender' | 'status', e: any) => {
+  const handleQuery = async (type: 'name' | 'gender' | 'status', value: any) => {
     // Query({ status: e.target.value as string });
     const query: {name?: string, gender?: string, status?: string} = {};
-    query[type] = e.target.value;
+    query[type] = value;
     const graphqlQuery = {
       operationName: "characters",
       query: `
@@ -99,7 +99,7 @@ export default function Character() {
                  }`,
       variables: { filter: query },
     };
-    getCharacter(graphqlQuery);
+    await getCharacter(graphqlQuery, (data) => dispatch(setCharacter(data)));
   };
 
   return (
@@ -112,7 +112,7 @@ export default function Character() {
                 <InputLabel htmlFor="input-labal"  className={style.selectLabel} aria-label='true'>Status</InputLabel>
                 <Select
                   onChange={(e) => {
-                    handleQuery("status", e);
+                    handleQuery("status", e.target.value);
                   }}
                   className={style.filterBox}
                   name="status-select"
@@ -128,7 +128,7 @@ export default function Character() {
                 <InputLabel className={style.selectLabel} >Gender</InputLabel>
                 <Select
                   onChange={(e) => {
-                    handleQuery("gender", e);
+                    handleQuery("gender", e.target.value);
                   }}
                   className={style.filterBox}
                   name="gender-select"
@@ -180,6 +180,7 @@ export default function Character() {
                             <span
                               className={style.imgIcon}
                               id="character-details"
+                              data-testid="character-details"
                               onClick={() => handleCharacterDetail(char.id)}
                             >
                               <InfoIcon

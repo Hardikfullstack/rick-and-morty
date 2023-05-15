@@ -4,7 +4,13 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { clearCharacter, getCharacterDetail, getEpisodeDetail } from "../../redux/action";
+import {
+  clearCharacter,
+  getCharacterDetail,
+  getEpisodeDetail,
+  setCharacterDetail,
+  setEpisodeDetail
+} from "../../redux/action";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import ButtonGoBack from "./ButtonGoBack";
 import AliveButton from "./AliveButton";
@@ -25,7 +31,7 @@ export default function CharacterDetail({
   const characterDetail = useAppSelector((state: any) => state.data.character);
   const episodeDetail = useAppSelector((state: any) => state.data.episode);
 //   const [isActive, setIsActive] = useState(false);
-  const query = (data:object) => {
+  const query = async (data:object) => {
     const graphqlQuery = {
       query: `
                 query getCharacterDetail($id: ID!) {
@@ -49,9 +55,9 @@ export default function CharacterDetail({
         id: data,
       },
     };
-    getCharacterDetail(graphqlQuery);
+    await getCharacterDetail(graphqlQuery, (data) => dispatch(setCharacterDetail(data)));
   };
-  const episodeQuery = (data: {name: string}) => {
+  const episodeQuery = async (data: {name: string}) => {
     const graphqlQuery = {
       operationName: "episodes",
       query: `
@@ -68,7 +74,7 @@ export default function CharacterDetail({
         filter: data,
       },
     };
-    getEpisodeDetail(graphqlQuery);
+    await getEpisodeDetail(graphqlQuery, (data) => dispatch(setEpisodeDetail(data)));
   };
   useEffect(() => {
     query(characterId);
