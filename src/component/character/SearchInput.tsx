@@ -2,8 +2,6 @@ import { TextField } from '@mui/material'
 import React from 'react'
 import style from './index.module.css'
 
-
-
 const SearchInput = ({name, handleNameQuery}:any) => {
 
   return (

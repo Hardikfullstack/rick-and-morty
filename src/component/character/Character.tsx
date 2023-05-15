@@ -60,7 +60,7 @@ export default function Character() {
             }`,
       variables: { page: data },
     };
-    dispatch(getCharacter(graphqlQuery));
+    getCharacter(graphqlQuery);
   };
 
   useEffect(() => {
@@ -99,7 +99,7 @@ export default function Character() {
                  }`,
       variables: { filter: query },
     };
-    dispatch(getCharacter(graphqlQuery));
+    getCharacter(graphqlQuery);
   };
 
   return (

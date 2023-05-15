@@ -49,7 +49,7 @@ export default function CharacterDetail({
         id: data,
       },
     };
-    dispatch(getCharacterDetail(graphqlQuery));
+    getCharacterDetail(graphqlQuery);
   };
   const episodeQuery = (data: {name: string}) => {
     const graphqlQuery = {
@@ -68,7 +68,7 @@ export default function CharacterDetail({
         filter: data,
       },
     };
-    dispatch(getEpisodeDetail(graphqlQuery));
+    getEpisodeDetail(graphqlQuery);
   };
   useEffect(() => {
     query(characterId);
