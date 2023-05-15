@@ -1,0 +1,162 @@
+.container {
+    margin: 80px 0px 0px 27px;
+  }
+  #input-labal {
+    padding-left: 18px;
+  }
+  
+  .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;  
+    transform: translate(-50%, -50%);
+  }
+  .image {
+    padding: 17px 22px 0 0;
+    margin: 0 0 1rem;
+  }
+  
+  .image:before {
+    position: absolute;
+    left: 40px;
+    right: 0;
+    top: 0;
+    bottom: 126px;
+    border: 3px solid #ffba00;
+    border-radius: 0 0 250px 250px;
+    content: "";
+  }
+  .imgStyle {
+    position: relative;
+    border: 3px solid midnightblue !important;
+    box-shadow: 0 14px 20px rgb(0 0 20%);
+    border-radius: 0 0 250px 250px;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+  .imgIcon {
+    position: absolute;
+    right: -7px;
+    bottom: 36px;
+    height: 37px;
+    width: 37px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 20px;
+    color: #081245;
+    border-radius: 50%;
+    background-color: #ffba00;
+  }
+  .characterNameDiv {
+    position: relative;
+    padding-top: 25px;
+  }
+  .characterName {
+    font-size: 24px !important;
+    color: #001376;
+    overflow-wrap: break-word;
+  }
+  .characterSpecies {
+    font-size: 14px;
+    color: #555555;
+  }
+  .characterPage {
+    position: relative;
+    margin: 0 auto;
+  }
+  .card {
+    gap: 54px;
+    margin: auto !important;
+  }
+  .status {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    padding: 0.35em 0.65em;
+    font-size: 0.95em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+  }
+  #gender {
+    gap: 13px;
+  }
+  .searchBar {
+    margin-bottom: 20px !important;
+    width: 500px !important;
+    margin-right: 250px !important;
+  }
+  .filterRow {
+    display: flex;
+    gap: 27px;
+  }
+  /* .filter-row-inside {
+    display: flex;
+    margin-bottom: 27px;
+  } */
+  
+  .filter {
+    float: left;
+    display: flex;
+    gap: 20px;
+  }
+  .filterRowInside {
+    display: flex;
+    gap: 27px;
+    flex-grow: 1;
+  }
+  
+  .filterBox {
+    width: 120px;
+    height: 40px;
+  }
+  .selectLabel {
+    margin-top: 10px;
+  }
+  
+  /* Media Quary */
+  
+  @media only screen and (max-width: 1042px) {
+    #id {
+      width: 200px !important;
+      /* display: block !important; */
+      background-color: #ffba00 !important;
+      margin-bottom: 27px !important;
+    }
+    #input-labal {
+      margin-bottom: 27px !important;
+    }
+    .filter {
+      width: 100%;
+    }
+    .filterRow {
+      display: flex;
+      flex-direction: column !important;
+      gap: 20px !important;
+    }
+    .filter-row-inside {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 20px !important;
+      margin-bottom: 27px !important;
+    }
+    .searchBar {
+      width: 350px !important;
+    }
+    .filterBox {
+      width: 75%;
+    }
+    .filterRowInside {
+      display: flex;
+      flex-direction: column;
+      gap: 27px;
+    }
+    .card{
+      margin-left: 54px !important;
+    }
+  }
+  
